@@ -1,5 +1,6 @@
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { createMcpHandler } from "@vercel/mcp-adapter";
 import { z } from "zod";
-import { createMcpHandler } from "mcp-handler";
 
 const BASE_URL = "https://laws.e-gov.go.jp/api/2";
 
@@ -45,9 +46,10 @@ const handler = createMcpHandler(
         date: z.string().optional().describe("時点指定（YYYY-MM-DD形式）"),
       },
       async ({ law_id, date }) => {
-        const result = await callEgov("/law_data/" + encodeURIComponent(law_id), {
-          date,
-        });
+        const result = await callEgov(
+          "/law_data/" + encodeURIComponent(law_id),
+          { date }
+        );
         return {
           content: [{ type: "text", text: result }],
         };
@@ -62,10 +64,7 @@ const handler = createMcpHandler(
         date: z.string().optional().describe("時点指定（YYYY-MM-DD形式）"),
       },
       async ({ keyword, date }) => {
-        const result = await callEgov("/keyword", {
-          keyword,
-          date,
-        });
+        const result = await callEgov("/keyword", { keyword, date });
         return {
           content: [{ type: "text", text: result }],
         };
@@ -75,8 +74,7 @@ const handler = createMcpHandler(
   {
     name: "e-gov-law-search",
     version: "1.0.0",
-  },
-  { basePath: "/api" }
+  }
 );
 
 export { handler as GET, handler as POST, handler as DELETE };
