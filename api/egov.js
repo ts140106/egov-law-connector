@@ -1,7 +1,8 @@
 // api/egov.js
-const BASE_URL = "https://laws.e-gov.go.jp/api/2";
 
 export default async function handler(req, res) {
+  const BASE_URL = "https://laws.e-gov.go.jp/api/2";
+
   try {
     const url = new URL(req.url, `https://${req.headers.host}`);
 
@@ -16,18 +17,18 @@ export default async function handler(req, res) {
       },
     });
 
-    const bodyText = await egovRes.text();
-
+    // レスポンスをそのまま中継
+    const text = await egovRes.text();
     res.status(egovRes.status);
     res.setHeader(
       "Content-Type",
       egovRes.headers.get("content-type") || "application/json"
     );
-    res.send(bodyText);
-  } catch (e) {
-    console.error(e);
+    res.send(text);
+  } catch (error) {
+    console.error(error);
     res
       .status(500)
-      .json({ error: "failed to call e-gov api", detail: String(e) });
+      .json({ error: "failed to call e-gov api", detail: String(error) });
   }
 }
