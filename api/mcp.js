@@ -71,8 +71,15 @@ const handler = createMcpHandler(
     );
   },
   {
-    name: "e-gov-law-search",
-    version: "1.0.0",
+    serverInfo: {
+      name: "e-gov-law-search",
+      version: "1.0.0",
+    },
+  },
+  {
+    basePath: "/api",
+    maxDuration: 60,
+    verboseLogs: true,
   }
 );
 
