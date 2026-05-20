@@ -1,7 +1,5 @@
-- import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-- import { createMcpHandler } from "@vercel/mcp-adapter";
-+ import { createMcpHandler } from "mcp-handler";
-  import { z } from "zod";
+import { createMcpHandler } from "mcp-handler";
+import { z } from "zod";
 
 const BASE_URL = "https://laws.e-gov.go.jp/api/2";
 
